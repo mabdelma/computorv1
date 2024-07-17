@@ -19,6 +19,17 @@ typedef struct s_parameter{
 }   t_parameter;
 
 
+int ft_strlen(char *st)
+{
+    int i;
+
+    i = 0;
+    if(st == NULL)
+        return(0);
+    while(st[i])
+        i++;
+    return(i);
+}
 
 char ft_isint(char st)
 {
@@ -33,11 +44,13 @@ char *ft_substring(char *str, int start, int end)
     int j;
 
     j = 0;
-    if(start >= strlen(str) || start > end)
+    if(start >= ft_strlen(str) || start > end)
         return (NULL);
-    if(end > strlen(str))
+    if(end > ft_strlen(str))
         return(&str[start]);
     nstr = malloc(sizeof(*nstr) * (end - start + 2));
+    if(!nstr)
+        return(NULL);
     for(int i = start; i <= end; i++)
     {
         nstr[j++] = str[i];
@@ -48,7 +61,7 @@ char *ft_substring(char *str, int start, int end)
 
 int ft_strpos(char letter, char *str)
 {
-    for(int j = 0; j < strlen(str); j++)
+    for(int j = 0; j < ft_strlen(str); j++)
     {
         if(str[j] == letter)
             return(j);
@@ -56,12 +69,12 @@ int ft_strpos(char letter, char *str)
     return(-1);
 }
 
-int strlen_sin_WS(char *str)
+int ft_strlen_sin_WS(char *str)
 {
     int i;
 
     i = 0;
-    for(int j = 0; j < strlen(str); j++)
+    for(int j = 0; j < ft_strlen(str); j++)
     {
         if(!(str[j] == ' ' || str[j] == '\r' || str[j] == '\n'
             || str[j] == '\t' || str[j] == '\v' || str[j] == '\f'))
@@ -76,8 +89,12 @@ char *str_sin_WS(char *str)
     int i;
 
     i = 0;
-    nstr = malloc(sizeof(*nstr) * (strlen_sin_WS(str) + 1));
-    for(int j = 0; j < strlen(str); j++)
+    if(!str)
+        return(NULL);
+    nstr = calloc(1,sizeof(*nstr) * (ft_strlen_sin_WS(str) + 1));
+    if(!nstr)
+        return(NULL);
+    for(int j = 0; j < ft_strlen(str); j++)
     {
         if(!(str[j] == ' ' || str[j] == '\r' || str[j] == '\n'
             || str[j] == '\t' || str[j] == '\v' || str[j] == '\f'))
@@ -100,6 +117,8 @@ char errors(char *eq)
     error = 0;
     c = 0;
     i = 0;
+    if(!eq)
+        return(128);
     while(eq[i])
     {
         if(eq[i + 1] && (eq[i + 1] == '-' || eq[i + 1] == '+'))
@@ -145,7 +164,7 @@ double ft_strtodouble(char *st)
     point = ft_strpos('.', st);
     if(st[0] == '+' || st[0] == '-')
         end = 1;
-    for(int i = strlen(st) - 1; i >= end; i--)
+    for(int i = ft_strlen(st) - 1; i >= end; i--)
     {
         if(st[i] == '.')
             continue;
@@ -159,7 +178,7 @@ double ft_strtodouble(char *st)
     if(point != -1)
     {
         y = 1.0;
-        for(int i = strlen(st) - 1; i > point; i--)
+        for(int i = ft_strlen(st) - 1; i > point; i--)
             y *= .1;
         x *= y;
     }
@@ -174,9 +193,9 @@ char *ft_add_sign(char *st)
 
     if(st && ft_isint(st[0]))
     {
-        str = malloc(sizeof(*str) * (strlen(st) + 2));
+        str = calloc(1, sizeof(*str) * (ft_strlen(st) + 2));
         str[0] = '+';
-        for(int i = 0; i < strlen(st); i++)
+        for(int i = 0; i < ft_strlen(st); i++)
             str[i+1] = st[i];
         free(st);
     }
@@ -189,7 +208,9 @@ char *ft_add_sign(char *st)
 
 char check_equal_zero(char *st)
 {
-    if(strlen(st) == 1 && st[0] == '0')
+    if(st == NULL)
+        return(-1);
+    if(ft_strlen(st) == 1 && st[0] == '0')
         return(0);
     return(1);
 }
@@ -199,11 +220,12 @@ char *move_to_left(char *left, char *right)
     char *str;
     int j;
 
+    j = 0;
     if(check_equal_zero(right))
     {
-        str = malloc(sizeof(*str) * (strlen(left) + strlen(right) + 1));
-        j = strlen(left);
-        for(int i = 0; i < strlen(right); i++)
+        str = calloc(1,(sizeof(*str) * (ft_strlen(left) + ft_strlen(right) + 1)));
+        j = ft_strlen(left);
+        for(int i = 0; i < ft_strlen(right); i++)
         {
             if(right[i] == '+')
                 str[j + i] = '-';
@@ -212,9 +234,9 @@ char *move_to_left(char *left, char *right)
             else
                 str[j + i] = right[i];
         }
-        for(int i = 0; i < strlen(left); i++)
+        for(int i = 0; i < ft_strlen(left); i++)
             str[i] = left[i];
-        str[strlen(left) + strlen(right)] = '\0';
+        str[ft_strlen(left) + ft_strlen(right)] = '\0';
         free(right);
         return(str);
     }
@@ -226,7 +248,7 @@ int count_signs(char *st)
     int count;
 
     count = 0;
-    for(int i = 0; i < strlen(st); i++)
+    for(int i = 0; i < ft_strlen(st); i++)
     {
         if(st[i] == '-' || st[i] == '+')
             count++;
@@ -249,7 +271,7 @@ void fill_coef_pow(char *st, t_parameter *t)
         str = ft_substring(st, 0, ft_strpos('*', st) - 1);
         t->coef = ft_strtodouble(str);
         free(str);
-        str = ft_substring(st, ft_strpos('^', st) + 1, strlen(st));
+        str = ft_substring(st, ft_strpos('^', st) + 1, ft_strlen(st));
         t->power = ft_strtodouble(str);
         free(str);
     }
@@ -269,7 +291,7 @@ t_parameter *fill_parameters(char *st)
         temp->prev = temp1;
         if(temp1)
             temp->prev->next = temp;
-        for(int j = current + 1; j <= strlen(st); j++)
+        for(int j = current + 1; j <= ft_strlen(st); j++)
         {
             if(st[j] == '-' || st[j] == '+' || !st[j])
             {
@@ -348,6 +370,21 @@ void free_parameter(t_parameter *t)
         free(t->str);
     free(t);
     
+}
+void free_all_parameters(t_parameter *t)
+{
+
+    t_parameter *par;
+    t_parameter *par2;
+    
+
+    par = t;
+    while(par)
+    {
+        par2 = par->prev;
+        free_parameter(par);
+        par = par2;
+    }
 }
 
 void reduced_list(t_parameter *t)
@@ -685,54 +722,60 @@ char    error_level2(char *st)
 
 
     current = 0;
-    printf("\n");
     for(int i = 0; i < count_signs(st); i++)
     {
-        for(int j = current + 1; j <= strlen(st); j++)
+        for(int j = current + 1; j <= ft_strlen(st); j++)
         {
             if(st[j] == '-' || st[j] == '+' || !st[j] || st[j] == '=')
             {
                 str =  ft_substring(st, current, j - 1);
                 errorflg |= error_level3(str);
-                printf("new part: %s, error factor: %d\n", str, errorflg);
                 free(str);
                 current = j;
                 break;
             }
         } 
     }
-    printf("\n");
     return (errorflg);
 }
 
 int main(int ac, char **av)
 {
     char *str;
-    t_equation equation1;
+    t_equation equation1 = {0};
     t_parameter *parameter1;
     double sigma;
-    char errorflg;
+    char errorflg = 0;
 
+    equation1.left = NULL;
+    equation1.right = NULL;
     if(ac != 2)
     {
         printf("Wrong number of arguments.\nPlease enter the full equation after program name like this \"equation \"\n");
+        exit(1);
     }
-    str = str_sin_WS(av[1]);
-    printf("your entery: %s\n", str);
-    errorflg |= errors(str);
-    if(!errors(str))
+    if(av[1])
+        errorflg = 128;
+    else if(ft_strlen_sin_WS(av[1])==0)
+        errorflg = 128;
+    else
+    {
+        str = str_sin_WS(av[1]);
+        printf("your entery: %s\n", str);
+        errorflg |= errors(str);
+    }
+    
+    if(!errorflg)
     {
         equation1.left = ft_add_sign(ft_substring(str, 0, ft_strpos('=', str) - 1));
-        equation1.right = ft_add_sign(ft_substring(str, ft_strpos('=', str) + 1, strlen(str)));
+        equation1.right = ft_add_sign(ft_substring(str, ft_strpos('=', str) + 1, ft_strlen(str)));
         free(str);
         str = move_to_left(equation1.left,equation1.right);
         if(equation1.left)
             free(equation1.left);
         errorflg |= error_level2(str);
     }
-    
-    // printf("your equation lefthand side: %s\n", equation1.left);
-    //printf("your equation righthand side: %s\n", equation1.right);
+
     if(errorflg)
     {
         printf("You got these errors: -\n");
@@ -781,45 +824,10 @@ int main(int ac, char **av)
         {
             printf("there isn't any equation for me to solve.\n");
         }
-
+        free_all_parameters(parameter1);
+        if(str)
+            free(str);
     }
-
-    //printf("moving all to the left handside %s=0\n",str);
-    //printf("first coefficient  %s %f\n", ft_substring(equation1.left, 0 ,ft_strpos('*', equation1.left) - 1),ft_strtodouble(ft_substring(equation1.left, 0 ,ft_strpos('*', equation1.left) - 1)));
-    // parameter1 = fill_parameters(str);
-    // reduced_list(parameter1);
-    // reorder_parameters(parameter1);
-    //printf("address before %p", parameter1);
-    //parameter1 = remove_zero_parameters(parameter1);
-    //printf(" address after %p\n", parameter1);
-    //printf("last parameter %s (coef: %f, pow: %f)\n", parameter1->str, parameter1->coef, parameter1->power);
-    // printf("Reduced form: ");
-    // put_equation(parameter1);
-    // printf("Polynomial degree: %d\n", (int)get_highest_power(parameter1));
-    // if(get_highest_power(parameter1) == 1)
-    //     solve_first_order(parameter1);
-    // else if(get_highest_power(parameter1) == 2)
-    // {
-    //     sigma = calculate_sigma(parameter1);
-    //     if(sigma > 0)
-    //         printf("Discriminant is strictly positive, the two solutions are:\n");
-    //     if(sigma < 0)
-    //         printf("Discriminant is strictly negative, the two solutions are:\n");
-    //     else
-    //         printf("Discriminant is zero, the solution is:\n");
-    //     solve_second_order(parameter1, sigma);
-    // }
-    // else if(get_highest_power(parameter1) > 2)
-    // {
-    //     printf("The polynomial degree is strictly greater than 2, I can't solve.\n");
-    // }
-    // else
-    // {
-    //     printf("there isn't any equation for me to solve.\n");
-    // }
-    //printf("lowest power: %f\n", get_lowest_power(parameter1));
-    if(str)
-        free(str);
-    // free(equation1.right);
+    
     return(0);
 }
