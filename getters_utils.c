@@ -1,0 +1,100 @@
+#include "computorv.h"
+
+char ft_isint(char st)
+{
+    if(st >= '0' && st <= '9')
+        return(1);
+    return(0);
+}
+
+double get_highest_power(t_parameter *t)
+{
+    double pow;
+    t_parameter *par;
+
+    pow = 0;
+    par = t;
+    if(par && !par->next)
+    {
+        while(par)
+        {
+            if(par->power > pow && par->coef != 0.0)
+                pow = par->power;
+            par = par->prev;
+        }
+    }
+    else if(par && !par->prev)
+    {
+        while(par)
+        {
+            if(par->power > pow)
+                pow = par->power;
+            par = par->next;
+        }
+    }
+    return(pow);
+}
+
+double get_lowest_power(t_parameter *t)
+{
+    double pow;
+    t_parameter *par;
+
+    pow = get_highest_power(t);
+    par = t;
+    if(par && !par->next)
+    {
+        while(par)
+        {
+            if(par->power < pow && par->coef != 0)
+                pow = par->power;
+            par = par->prev;
+        }
+    }
+    else if(par && !par->prev)
+    {
+        while(par)
+        {
+            if(par->power < pow)
+                pow = par->power;
+            par = par->next;
+        }
+    }
+    return(pow);
+}
+
+double ft_strtodouble(char *st)
+{
+    double x;
+    double y;
+    int end;
+    int point;
+
+    x = 0.0;
+    y = 1.0;
+    end  = 0;
+    point = ft_strpos('.', st);
+    if(st[0] == '+' || st[0] == '-')
+        end = 1;
+    for(int i = ft_strlen(st) - 1; i >= end; i--)
+    {
+        if(st[i] == '.')
+            continue;
+        else
+        {
+            x += (st[i] - '0') * y;
+            y *= 10.0;
+        }
+        
+    }
+    if(point != -1)
+    {
+        y = 1.0;
+        for(int i = ft_strlen(st) - 1; i > point; i--)
+            y *= 0.1;
+        x *= y;
+    }
+    if(st[0] == '-')
+        x *= -1.0;
+    return (x);
+}
