@@ -7,7 +7,8 @@ FILES       =   free.c \
                 string_checkers.c \
                 string_editors.c\
 				errors_handlers.c\
-				write_functions.c
+				write_functions.c\
+				extra_utils.c
 
 # Sources and objects
 SRC         =   $(FILES)

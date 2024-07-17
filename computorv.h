@@ -57,5 +57,6 @@ void write_char(char c);
 void write_str(const char *str);
 void write_int(int n);
 void write_double(double d, int precision);
+void print_errors(char errorflg);
 
 #endif
