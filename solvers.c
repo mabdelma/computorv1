@@ -81,11 +81,11 @@ void solve_second_order(t_parameter *t, double sigma)
     sol = (-1 * b) / (2 * a);
     if(sigma > 0)
     {
-        tem = sol - (sqrt(sigma) / (2 * a));
-        write_str("x = (-b - sqrt(sigma)) / (2 * a) = ");
+        tem = sol - (sqrt_newton(sigma) / (2 * a));
+        write_str("x = (-b - sqrt_newton(sigma)) / (2 * a) = ");
         write_double(tem, 2);
-        write_str("\nx = (-b + sqrt(sigma)) / (2 * a) = ");
-        tem = sol + (sqrt(sigma) / (2 * a));
+        write_str("\nx = (-b + sqrt_newton(sigma)) / (2 * a) = ");
+        tem = sol + (sqrt_newton(sigma) / (2 * a));
         write_double(tem, 2);
         write_str("\n");
     }
@@ -97,14 +97,14 @@ void solve_second_order(t_parameter *t, double sigma)
     }
     else
     {
-        tem = sqrt((-1 * sigma)) / (2 * a);
+        tem = sqrt_newton((-1 * sigma)) / (2 * a);
         if(tem < 0.0)
             tem *= -1.0;
-        write_str("x = (-b + sqrt(sigma)) / (2 * a) = ");
+        write_str("x = (-b + sqrt_newton(sigma)) / (2 * a) = ");
         write_double(sol, 2);
         write_str(" + ");
         write_double(tem, 2);
-        write_str("i\nx = (-b - sqrt(sigma)) / (2 * a) = ");
+        write_str("i\nx = (-b - sqrt_newton(sigma)) / (2 * a) = ");
         write_double(sol, 2);
         write_str(" - ");
         write_double(tem, 2);

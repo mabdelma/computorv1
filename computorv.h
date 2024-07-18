@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 typedef struct s_equation{
     char *left;
@@ -58,5 +57,6 @@ void write_str(const char *str);
 void write_int(int n);
 void write_double(double d, int precision);
 void print_errors(char errorflg);
+double sqrt_newton(double number);
 
 #endif

@@ -20,3 +20,20 @@ void print_errors(char errorflg)
     if(errorflg & 128)
         printf(" -using invalid equation format\n");
 }
+
+double sqrt_newton(double number)
+{
+    if (number < 0)
+        return -1;
+    if (number == 0 || number == 1)
+        return number;
+    double precision = 0.000001;
+    double guess = number > 1 ? number : 1;
+    double next_guess = 0.5 * (guess + number / guess);
+    while (guess - next_guess > precision || next_guess - guess > precision)
+    {
+        guess = next_guess;
+        next_guess = 0.5 * (guess + number / guess);
+    }
+    return next_guess;
+}

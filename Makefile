@@ -30,7 +30,7 @@ all: $(NAME)
 
 # Link the executable
 $(NAME): $(OBJS)
-	$(GCC) $(FLAGS) $(OBJS) -o $(NAME) -lm
+	$(GCC) $(FLAGS) $(OBJS) -o $(NAME)
 
 # Clean object files
 clean:

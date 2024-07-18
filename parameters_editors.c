@@ -61,7 +61,6 @@ t_parameter *fill_parameters(char *st)
             if(st[j] == '-' || st[j] == '+' || !st[j])
             {
                 temp->str =  ft_substring(st, current, j - 1);
-                //printf("\ntemp: %s, %ld\n",temp->str, strlen(temp->str));
                 fill_coef_pow(temp->str, temp);
                 current = j;
                 break;
@@ -189,43 +188,6 @@ t_parameter *remove_zero_parameters(t_parameter *t)
             free_parameter(tofree);
             continue;
         }
-        // if(par->coef == 0.0)
-        // {
-        //     tofree = par;
-        //     printf("\nfount coef:%f, power:%f\n", tofree->coef, tofree->power);
-        //     if(par->next)
-        //     {
-        //         if(par->prev)
-        //             {
-        //                 par->next->prev = par->prev;
-        //                 par->prev->next = par->next;
-        //             }
-        //         else
-        //         {
-        //             par->next->prev = NULL;
-        //             printf("\n to %s\n", tofree->str);
-        //             free_parameter(tofree);
-        //             break;
-        //         }
-        //     }
-        //     else
-        //     {
-        //         if(par->prev)
-        //         {
-        //             par->prev->next = NULL;
-        //             temp = par->prev;
-        //         }
-        //         else
-        //         {
-        //             temp = NULL;
-        //         }
-        //     }
-        //     par = tofree->prev;
-        //     printf("\n to2 %s\n", tofree->str);
-        //     printf("\nfree address: %p\n", tofree);
-        //     free_parameter(tofree);
-        //     continue;
-        // }
         par = par->prev;        
     }
     return(temp);
