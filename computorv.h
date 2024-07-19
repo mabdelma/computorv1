@@ -62,7 +62,9 @@ void write_int(int n);
 void write_double(double d, int precision);
 void print_errors(unsigned int errorflg);
 double sqrt_newton(double number);
-void solve_equation(t_parameter *t);
+void solve_equation(t_parameter *t, double catchflg);
 void parameters_handler(char *str);
+unsigned int get_paramters_count(t_parameter *t);
+double get_nonzero_coef(t_parameter *t);
 
 #endif

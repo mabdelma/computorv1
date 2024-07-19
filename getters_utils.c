@@ -29,6 +29,20 @@ double get_highest_coef(t_parameter *t)
     return(coef);
 }
 
+unsigned int get_paramters_count(t_parameter *t)
+{
+    unsigned int count = 0;
+    t_parameter *par;
+
+    par = t;
+    while(par)
+    {
+        count++;
+        par = par->prev;
+    }
+    return(count);
+}
+
 double get_lowest_coef(t_parameter *t)
 {
     double coef = 0;

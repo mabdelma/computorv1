@@ -27,6 +27,21 @@ void print_errors(unsigned int errorflg)
         printf(" -entering two or more consecutive zeros\n");
 }
 
+double get_nonzero_coef(t_parameter *t)
+{
+    t_parameter *par;
+    double catchflg = 0.0;
+
+    par = t;
+    while(par)
+    {
+        if(par->coef != 0.0)
+            catchflg = par->coef;
+        par = par->prev;
+    }
+    return(catchflg);
+}
+
 double sqrt_newton(double number)
 {
     if (number < 0)
@@ -47,10 +62,12 @@ double sqrt_newton(double number)
 void parameters_handler(char *str)
 {
     t_parameter *parameter1;
+    char catchflg = 0;
     
     parameter1 = fill_parameters(str);
     write_str("move all to the left-hand side: ");
     put_equation(parameter1, 1);
+    catchflg = get_nonzero_coef(parameter1);
     reduced_list(parameter1);
     write_str("common factors grouping: ");
     put_equation(parameter1, 0);
@@ -59,6 +76,6 @@ void parameters_handler(char *str)
     put_equation(parameter1, 0);
     reduced_parameters(parameter1);
     printf("polynomial degree: %s\n", get_highest_power(parameter1));
-    solve_equation(parameter1);
+    solve_equation(parameter1, catchflg);
     free_all_parameters(parameter1);
 }

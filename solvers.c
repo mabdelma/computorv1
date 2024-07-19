@@ -115,7 +115,7 @@ void solve_second_order(t_parameter *t, double sigma)
 
 }
 
-void solve_equation(t_parameter *t)
+void solve_equation(t_parameter *t, double catchflg)
 {
     double sigma = 0.0;
 
@@ -138,6 +138,9 @@ void solve_equation(t_parameter *t)
         }
     else
     {
-        printf("there isn't any equation for me to solve.\n");
+        if(catchflg != 0.0 && t->coef == 0.0)
+            printf("each real number is a solution...\n");
+        else
+            printf("there isn't any equation for me to solve.\n");
     }
 }
