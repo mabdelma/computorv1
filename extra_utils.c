@@ -24,7 +24,7 @@ void print_errors(unsigned int errorflg)
     if(errorflg & 512)
         printf(" -entering more big number (maximum allowed number of 8 digits including the . sign)\n");
     if(errorflg & 1024)
-        printf(" -entering two or more consecutive zeros\n");
+        printf(" -entering some consecutive zeros or a starting zero number\n");
 }
 
 double get_nonzero_coef(t_parameter *t)

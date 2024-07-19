@@ -134,7 +134,7 @@ void solve_equation(t_parameter *t, double catchflg)
     }
     else if(strcmp(get_highest_power(t), "2") > 0 || ft_strlen(get_highest_power(t)) > 1)
         {
-            printf("the polynomial degree is strictly greater than 2, i can't solve.\n");
+            printf("the polynomial degree is strictly greater than 2, I can't solve.\n");
         }
     else
     {
