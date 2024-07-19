@@ -2,15 +2,11 @@
 
 unsigned int errors(char *eq)
 {
-    unsigned int error;
-    char found;
-    char c;
-    int i;
+    unsigned int error = 0;
+    char found = 0;
+    char c = 0;
+    int i = 0;
 
-    found = 0;
-    error = 0;
-    c = 0;
-    i = 0;
     if(!eq)
         return(0x80);
     while(eq[i])
@@ -45,14 +41,26 @@ unsigned int errors(char *eq)
     return (error);
 }
 
+unsigned int error_core(char *av)
+{
+    unsigned int errorflg = 0;
+
+    if(!av)
+        errorflg = 8;
+    else if(ft_strlen_sin_WS(av) == 0)
+        errorflg = 8;
+    else if(ft_strlen_sin_WS(av) == -1)
+        errorflg = 0x100;
+    return(errorflg);
+}
+
 unsigned int error_level3(char *st)
 {
     unsigned int errorflg = 0;
 
     if(not_accepted_character(st))
         errorflg |= 16;
-    if(not_accepted_format(st))
-        errorflg |= 32;
+    errorflg |= not_accepted_format(st);
 
     return(errorflg);    
 }

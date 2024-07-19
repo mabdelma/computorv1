@@ -112,6 +112,45 @@ void reduced_list(t_parameter *t)
     }
 }
 
+void reduced_parameters(t_parameter *t)
+{
+    t_parameter *par;
+    double div;
+    double cur;
+
+    div = get_highest_coef(t);
+    par = t;
+    cur = 0;
+    if(div >= 100.0)
+    {
+        write_str("equation divided by ");
+        write_double(div, 2);
+        write_str(": ");
+        while(par)
+        {
+            cur = par->coef;
+            par->coef = cur / div;
+            par = par->prev;
+        }
+        put_equation(t, 0);
+    }
+    div = get_lowest_coef(t);
+    par = t;
+    if(div <= -100.0)
+    {
+        write_str("equation divided by ");
+        write_double(div, 2);
+        write_str(": ");
+        while(par)
+        {
+            cur = par->coef;
+            par->coef = cur / div;
+            par = par->prev;
+        }
+        put_equation(t, 0);
+    }
+}
+
 void reorder_parameters(t_parameter *t)
 {
     t_parameter *par;
@@ -142,57 +181,6 @@ void reorder_parameters(t_parameter *t)
     }
 }
 
-t_parameter *remove_zero_parameters(t_parameter *t)
-{
-    t_parameter *par;
-    t_parameter *temp;
-    t_parameter *tofree;
-
-    par = t;
-    temp = t;
-    while(par)
-    {
-        if(par->coef == 0.0)
-        {
-            tofree = par;
-            if(par->next)
-            {
-                if(par->prev)
-                    {
-                        par->next->prev = par->prev;
-                        par->prev->next = par->next;
-                    }
-                else
-                {
-                    par->next->prev = NULL;
-                    printf("\n parameteradd %p, coef: %f, power: %f\n", tofree, tofree->coef, tofree->power);
-                    free_parameter(tofree);
-                    break ;
-                }
-            }
-            else
-            {
-                if(par->prev)
-                {
-                    par->prev->next = NULL;
-                    temp = par->prev;
-                }
-                else
-                {
-                    temp = NULL;
-                }
-                
-                par = tofree->prev;
-            }
-            printf("\n parameteradd %p, coef: %f, power: %f\n", tofree, tofree->coef, tofree->power);
-            free_parameter(tofree);
-            continue;
-        }
-        par = par->prev;        
-    }
-    return(temp);
-}
-
 void put_equation(t_parameter *t, char status)
 {
     t_parameter *par;
@@ -221,7 +209,7 @@ void put_equation(t_parameter *t, char status)
             {
                 if(par->coef == 0)
                     write_str(" + ");    
-                write_double(coef, 1);
+                write_double(coef, 4);
                 write_str(" * x ^ ");
                 write_int((int)par->power);
                 printed++;

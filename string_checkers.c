@@ -96,6 +96,7 @@ unsigned int not_accepted_character(char *st)
 unsigned int not_accepted_format(char *st)
 {
     char stage = 1;
+    char point = 0;
     char found = 0;
     int i = 1;
 
@@ -106,9 +107,24 @@ unsigned int not_accepted_format(char *st)
         if(stage == 1)
         {
             if(st[i] == '*' && i > 1)
+            {
                 stage = 2;
+                point = 0;
+            }
             else if(!(st[i] >= '0' && st[i] <= '9') && !(st[i] == '.'))
                 return(32);
+            if(st[i] == '.')
+            {
+                if(point == 0)
+                    point = 1;
+                else
+                    return(32);
+            }
+            if(i > 9)
+            {
+                printf("\nthhhh\n");
+                return(544);
+            }
         }
         else if(stage == 2)
         {
@@ -128,7 +144,7 @@ unsigned int not_accepted_format(char *st)
         }
         else if(stage == 4)
         {
-            if(!(st[i] >= '0' && st[i] <= '9') && !(st[i] == '.'))
+            if(!(st[i] >= '0' && st[i] <= '9'))
                 return(32);
             else
                 found = 1;

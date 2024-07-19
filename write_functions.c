@@ -53,7 +53,9 @@ void write_double(double d, int precision)
     double frac_part = d - int_part;
     for (int i = 0; i < precision; i++) {
         frac_part *= 10;
+        if(frac_part < 1)
+            write_char('0');
     }
-
+    
     write_int((int)(frac_part + 0.5));
 }

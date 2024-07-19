@@ -2,7 +2,7 @@
 
 void print_errors(unsigned int errorflg)
 {
-    printf("you got these errors: -\n");
+    printf("you got these errors: %d-\n", errorflg);
     if(errorflg & 1)
         printf(" -using many consucatives (+,-) signs\n");
     if(errorflg & 2)
@@ -17,10 +17,12 @@ void print_errors(unsigned int errorflg)
         printf(" -using an inacceptable format\n");
     if(errorflg & 64)
         printf(" -using multiple variables format\n");
-    if(errorflg & 0x80)
+    if(errorflg & 128)
         printf(" -using invalid equation format\n");
-    if(errorflg & 0x100)
+    if(errorflg & 265)
         printf(" -entering more than 500 characters (maximum allowed 500 characters)\n");
+    if(errorflg & 512)
+        printf(" -entering more big number (maximum allowed number of 8 digits including the . sign )\n");
 }
 
 double sqrt_newton(double number)
@@ -38,4 +40,23 @@ double sqrt_newton(double number)
         next_guess = 0.5 * (guess + number / guess);
     }
     return next_guess;
+}
+
+void parameters_handler(char *str)
+{
+    t_parameter *parameter1;
+    
+    parameter1 = fill_parameters(str);
+    write_str("move all to the left-hand side: ");
+    put_equation(parameter1, 1);
+    reduced_list(parameter1);
+    write_str("common factors grouping: ");
+    put_equation(parameter1, 0);
+    reorder_parameters(parameter1);
+    write_str("Reduced Form: ");
+    put_equation(parameter1, 0);
+    reduced_parameters(parameter1);
+    printf("polynomial degree: %d\n", (int)get_highest_power(parameter1));
+    solve_equation(parameter1);
+    free_all_parameters(parameter1);
 }

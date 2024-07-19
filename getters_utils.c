@@ -7,6 +7,50 @@ char ft_isint(char st)
     return(0);
 }
 
+double get_highest_coef(t_parameter *t)
+{
+    double coef = 0;
+    t_parameter *par;
+
+    if(t)
+        coef = t->coef;
+    else
+        return(0);
+    par = t->prev;
+    if(par && !par->prev)
+    {
+        while(par)
+        {
+            if(par->coef > coef)
+                coef = par->coef;
+            par = par->next;
+        }
+    }
+    return(coef);
+}
+
+double get_lowest_coef(t_parameter *t)
+{
+    double coef = 0;
+    t_parameter *par;
+
+    if(t)
+        coef = t->coef;
+    else
+        return(0);
+    par = t->prev;
+    if(par && !par->prev)
+    {
+        while(par)
+        {
+            if(par->coef < coef)
+                coef = par->coef;
+            par = par->next;
+        }
+    }
+    return(coef);
+}
+
 double get_highest_power(t_parameter *t)
 {
     double pow;

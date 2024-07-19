@@ -16,12 +16,12 @@ void solve_first_order(t_parameter *t)
         par = par->prev;
     }
     write_str("x = -1 * ");
-    write_double(result, 2);
+    write_double(result, 4);
     write_str(" / ");
-    write_double(coef, 2);
+    write_double(coef, 9);
     result = (-1 * result) / coef;
     write_str("\nx = ");
-    write_double(result, 2);
+    write_double(result, 4);
     write_str("\n");
 }
 
@@ -46,14 +46,14 @@ double calculate_sigma(t_parameter *t)
         par = par->prev;
     }
     write_str("a = ");
-    write_double(a, 2);
+    write_double(a, 4);
     write_str(", b = ");
-    write_double(b, 2);
+    write_double(b, 4);
     write_str(", c = ");
-    write_double(c, 2);
+    write_double(c, 4);
     write_str("\nsigma = (b ^ 2) - (4 * a * c) = ");
     sigma = (b * b) - (4 * a * c);
-    write_double(sigma, 2);
+    write_double(sigma, 4);
     write_str("\n");
     return(sigma);
 }
@@ -83,10 +83,10 @@ void solve_second_order(t_parameter *t, double sigma)
     {
         tem = sol - (sqrt_newton(sigma) / (2 * a));
         write_str("x = (-b - sqrt_newton(sigma)) / (2 * a) = ");
-        write_double(tem, 2);
+        write_double(tem, 4);
         write_str("\nx = (-b + sqrt_newton(sigma)) / (2 * a) = ");
         tem = sol + (sqrt_newton(sigma) / (2 * a));
-        write_double(tem, 2);
+        write_double(tem, 4);
         write_str("\n");
     }
     else if(sigma == 0)
@@ -113,4 +113,31 @@ void solve_second_order(t_parameter *t, double sigma)
     }
     a = tem;
 
+}
+
+void solve_equation(t_parameter *t)
+{
+    double sigma = 0.0;
+
+    if(get_highest_power(t) == 1)
+            solve_first_order(t);
+        else if(get_highest_power(t) == 2)
+        {
+            sigma = calculate_sigma(t);
+            if(sigma > 0)
+                printf("discriminant is strictly positive, the two solutions are:\n");
+            if(sigma < 0)
+                printf("discriminant is strictly negative, the two solutions are:\n");
+            else if(sigma == 0)
+                printf("discriminant is zero, the solution is:\n");
+            solve_second_order(t, sigma);
+        }
+        else if(get_highest_power(t) > 2)
+        {
+            printf("the polynomial degree is strictly greater than 2, i can't solve.\n");
+        }
+        else
+        {
+            printf("there isn't any equation for me to solve.\n");
+        }
 }
