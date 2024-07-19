@@ -122,7 +122,6 @@ unsigned int not_accepted_format(char *st)
             }
             if(i > 9)
             {
-                printf("\nthhhh\n");
                 return(544);
             }
         }
@@ -156,6 +155,50 @@ unsigned int not_accepted_format(char *st)
     else
         return(32);
 }
+
+unsigned int not_accepted_numbers(char *st)
+{
+    int i = 0;
+    char stage = 1;
+    int i2 = 0;
+
+    while(st[i])
+    {
+        if(stage == 1)
+        {
+            if(st[1] == '0' && (st[2] >= '0' && st[2] <= '9'))
+                return(1056);
+            if(st[i] == '*' && i > 1)
+            {
+                stage = 2;
+            }
+            
+        }
+        else if(stage == 2)
+        {
+            if(st[i] >= 'a' && st[i] <= 'z')
+                stage = 3;
+            else if(st[i] >= 'A' && st[i] <= 'Z')
+                stage = 3;
+        }
+        else if(stage == 3)
+        {
+            if(st[i] == '^')
+            {
+                stage = 4;
+                i2 = i + 1;
+            }
+        }
+        else if(stage == 4)
+        {
+            if(st[i2] == '0' && st[i2 + 1])
+                    return(1056);
+        }
+        i++;
+    }
+    return(0);
+}
+
 unsigned int many_characters(char *st)
 {
     char c;

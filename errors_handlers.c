@@ -61,6 +61,7 @@ unsigned int error_level3(char *st)
     if(not_accepted_character(st))
         errorflg |= 16;
     errorflg |= not_accepted_format(st);
+    errorflg |= not_accepted_numbers(st);
 
     return(errorflg);    
 }

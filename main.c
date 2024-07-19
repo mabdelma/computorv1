@@ -18,7 +18,7 @@ int main(int ac, char **av)
         str = str_sin_WS(av[1]);
         errorflg |= errors(str);
     }
-
+    
     if(!errorflg)
     {
         equation1.left = ft_add_sign(ft_substring(str, 0, ft_strpos('=', str) - 1));

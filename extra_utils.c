@@ -4,9 +4,9 @@ void print_errors(unsigned int errorflg)
 {
     printf("you got these errors: -\n");
     if(errorflg & 1)
-        printf(" -using many consucatives (+,-) signs\n");
+        printf(" -using many consecutives (+,-) signs\n");
     if(errorflg & 2)
-        printf(" -using many consucatives power signs\n");
+        printf(" -using many consecutives power signs\n");
     if(errorflg & 4)
         printf(" -not using only one equal sign\n");
     if(errorflg & 8)  
@@ -22,7 +22,9 @@ void print_errors(unsigned int errorflg)
     if(errorflg & 265)
         printf(" -entering more than 500 characters (maximum allowed 500 characters)\n");
     if(errorflg & 512)
-        printf(" -entering more big number (maximum allowed number of 8 digits including the . sign )\n");
+        printf(" -entering more big number (maximum allowed number of 8 digits including the . sign)\n");
+    if(errorflg & 1024)
+        printf(" -entering two or more consecutive zeros\n");
 }
 
 double sqrt_newton(double number)

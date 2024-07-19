@@ -51,6 +51,7 @@ double calculate_sigma(t_parameter *t);
 void solve_second_order(t_parameter *t, double sigma);
 unsigned int not_accepted_character(char *st);
 unsigned int not_accepted_format(char *st);
+unsigned int not_accepted_numbers(char *st);
 unsigned int    many_characters(char *st);
 unsigned int   error_level3(char *st);
 unsigned int   error_level2(char *st);
