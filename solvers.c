@@ -9,9 +9,9 @@ void solve_first_order(t_parameter *t)
     par = t;
     while(par)
     {
-        if(par->power == 1)
+        if(strcmp(par->power, "1") == 0)
             coef = par->coef;
-        else if(par->power == 0)
+        else if(strcmp(par->power, "0") == 0)
             result = par->coef;
         par = par->prev;
     }
@@ -37,11 +37,11 @@ double calculate_sigma(t_parameter *t)
     
     while(par)
     {
-        if(par->power == 1)
+        if(strcmp(par->power, "1") == 0)
             b = par->coef;
-        else if(par->power == 0)
+        else if(strcmp(par->power, "0") == 0)
             c = par->coef;
-        else if(par->power == 2)
+        else if(strcmp(par->power, "2") == 0)
             a = par->coef;
         par = par->prev;
     }
@@ -72,9 +72,9 @@ void solve_second_order(t_parameter *t, double sigma)
     par = t;
     while(par)
     {
-        if(par->power == 1)
+        if(strcmp(par->power, "1") == 0)
             b = par->coef;
-        else if(par->power == 2)
+        else if(strcmp(par->power, "2") == 0)
             a = par->coef;
         par = par->prev;
     }
@@ -119,25 +119,25 @@ void solve_equation(t_parameter *t)
 {
     double sigma = 0.0;
 
-    if(get_highest_power(t) == 1)
+    if(strcmp(get_highest_power(t), "1") == 0)
             solve_first_order(t);
-        else if(get_highest_power(t) == 2)
-        {
-            sigma = calculate_sigma(t);
-            if(sigma > 0)
-                printf("discriminant is strictly positive, the two solutions are:\n");
-            if(sigma < 0)
-                printf("discriminant is strictly negative, the two solutions are:\n");
-            else if(sigma == 0)
-                printf("discriminant is zero, the solution is:\n");
-            solve_second_order(t, sigma);
-        }
-        else if(get_highest_power(t) > 2)
+    else if(strcmp(get_highest_power(t), "2") == 0)
+    {
+        sigma = calculate_sigma(t);
+        if(sigma > 0)
+            printf("discriminant is strictly positive, the two solutions are:\n");
+        if(sigma < 0)
+            printf("discriminant is strictly negative, the two solutions are:\n");
+        else if(sigma == 0)
+            printf("discriminant is zero, the solution is:\n");
+        solve_second_order(t, sigma);
+    }
+    else if(strcmp(get_highest_power(t), "2") > 0 || ft_strlen(get_highest_power(t)) > 1)
         {
             printf("the polynomial degree is strictly greater than 2, i can't solve.\n");
         }
-        else
-        {
-            printf("there isn't any equation for me to solve.\n");
-        }
+    else
+    {
+        printf("there isn't any equation for me to solve.\n");
+    }
 }

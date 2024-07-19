@@ -16,7 +16,7 @@ typedef struct s_parameter{
     struct s_parameter *prev;
     struct s_parameter *next;
     double  coef;
-    double power;
+    char *power;
     char *str;
 }   t_parameter;
 
@@ -36,8 +36,8 @@ char *move_to_left(char *left, char *right);
 int count_signs(char *st);
 void fill_coef_pow(char *st, t_parameter *t);
 t_parameter *fill_parameters(char *st);
-double get_highest_power(t_parameter *t);
-double get_lowest_power(t_parameter *t);
+char *get_highest_power(t_parameter *t);
+char *get_lowest_power(t_parameter *t);
 double get_highest_coef(t_parameter *t);
 double get_lowest_coef(t_parameter *t);
 void free_parameter(t_parameter *t);

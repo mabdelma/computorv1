@@ -6,9 +6,13 @@ void fill_coef_pow(char *st, t_parameter *t)
 
     if(!st)
     {
-        printf("\nf2\n");
         t->coef = 0.0;
-        t->power = 0.0;
+        t->power = calloc(1, 2);
+        if(t->power)
+        {
+            t->power[0] = '0';
+            t->power[1] = '\0';
+        }
         return ;
     }
 
@@ -19,7 +23,6 @@ void fill_coef_pow(char *st, t_parameter *t)
         {
             if(strlen(str) == 1 &&(str[0] == '-' || str[0] == '+'))
             {
-                printf("\nf2\n");
                 t->coef = 0.0;
             }
             else
@@ -29,16 +32,19 @@ void fill_coef_pow(char *st, t_parameter *t)
         {
             t->coef = 0.0;
         }
-        t->power = 0.0;
+        t->power = calloc(1, 2);
+        if(t->power)
+        {
+            t->power[0] = '0';
+            t->power[1] = '\0';
+        }
     }
     else
     {
         str = ft_substring(st, 0, ft_strpos('*', st) - 1);
         t->coef = ft_strtodouble(str);
         free(str);
-        str = ft_substring(st, ft_strpos('^', st) + 1, ft_strlen(st));
-        t->power = ft_strtodouble(str);
-        free(str);
+        t->power = ft_substring(st, ft_strpos('^', st) + 1, ft_strlen(st));
     }
 }
 
@@ -88,7 +94,7 @@ void reduced_list(t_parameter *t)
             par2 = par->prev;
             while(par2)
             {
-                if(par->power == par2->power)
+                if(!strcmp(par->power, par2->power))
                 {
                     par->coef += par2->coef;
                     if(par2->prev)
@@ -165,7 +171,7 @@ void reorder_parameters(t_parameter *t)
             par2 = par->prev;
             while(par2)
             {
-                if(par->power > par2->power)
+                if(strcmp(par->power, par2->power) > 0)
                 {
                     temp.coef = par->coef;
                     temp.power = par->power;
@@ -211,7 +217,7 @@ void put_equation(t_parameter *t, char status)
                     write_str(" + ");    
                 write_double(coef, 4);
                 write_str(" * x ^ ");
-                write_int((int)par->power);
+                write_str(par->power);
                 printed++;
             }
             

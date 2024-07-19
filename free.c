@@ -6,6 +6,8 @@ void free_parameter(t_parameter *t)
         return ;
     if(t->str)
         free(t->str);
+    if(t->power)
+        free(t->power);
     free(t);
     
 }

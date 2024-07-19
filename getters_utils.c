@@ -51,58 +51,38 @@ double get_lowest_coef(t_parameter *t)
     return(coef);
 }
 
-double get_highest_power(t_parameter *t)
+char *get_highest_power(t_parameter *t)
 {
-    double pow;
+    char *pow;
     t_parameter *par;
 
-    pow = 0;
-    par = t;
-    if(par && !par->next)
+    if(!t)
+        return(NULL);
+    pow = t->power;
+    par = t->prev;
+    while(par)
     {
-        while(par)
-        {
-            if(par->power > pow && par->coef != 0.0)
-                pow = par->power;
-            par = par->prev;
-        }
-    }
-    else if(par && !par->prev)
-    {
-        while(par)
-        {
-            if(par->power > pow)
-                pow = par->power;
-            par = par->next;
-        }
+        if(strcmp(par->power, pow) > 0 && par->coef != 0.0)
+            pow = par->power;
+        par = par->prev;
     }
     return(pow);
 }
 
-double get_lowest_power(t_parameter *t)
+char *get_lowest_power(t_parameter *t)
 {
-    double pow;
+    char *pow;
     t_parameter *par;
 
-    pow = get_highest_power(t);
-    par = t;
-    if(par && !par->next)
+    if(!t)
+        return(NULL);
+    pow = t->power;
+    par = t->prev;
+    while(par)
     {
-        while(par)
-        {
-            if(par->power < pow && par->coef != 0)
-                pow = par->power;
-            par = par->prev;
-        }
-    }
-    else if(par && !par->prev)
-    {
-        while(par)
-        {
-            if(par->power < pow)
-                pow = par->power;
-            par = par->next;
-        }
+        if(strcmp(par->power, pow) < 0 && par->coef != 0.0)
+            pow = par->power;
+        par = par->prev;
     }
     return(pow);
 }

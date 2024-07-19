@@ -2,7 +2,7 @@
 
 void print_errors(unsigned int errorflg)
 {
-    printf("you got these errors: %d-\n", errorflg);
+    printf("you got these errors: -\n");
     if(errorflg & 1)
         printf(" -using many consucatives (+,-) signs\n");
     if(errorflg & 2)
@@ -56,7 +56,7 @@ void parameters_handler(char *str)
     write_str("Reduced Form: ");
     put_equation(parameter1, 0);
     reduced_parameters(parameter1);
-    printf("polynomial degree: %d\n", (int)get_highest_power(parameter1));
+    printf("polynomial degree: %s\n", get_highest_power(parameter1));
     solve_equation(parameter1);
     free_all_parameters(parameter1);
 }
