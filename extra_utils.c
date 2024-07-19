@@ -1,6 +1,6 @@
 #include "computorv.h"
 
-void print_errors(char errorflg)
+void print_errors(unsigned int errorflg)
 {
     printf("you got these errors: -\n");
     if(errorflg & 1)
@@ -17,8 +17,10 @@ void print_errors(char errorflg)
         printf(" -using an inacceptable format\n");
     if(errorflg & 64)
         printf(" -using multiple variables format\n");
-    if(errorflg & 128)
+    if(errorflg & 0x80)
         printf(" -using invalid equation format\n");
+    if(errorflg & 0x100)
+        printf(" -entering more than 500 characters (maximum allowed 500 characters)\n");
 }
 
 double sqrt_newton(double number)

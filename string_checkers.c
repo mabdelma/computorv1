@@ -8,7 +8,12 @@ int ft_strlen(char *st)
     if(st == NULL)
         return(0);
     while(st[i])
-        i++;
+    {
+        if(i <= 500)
+            i++;
+        else
+            return(-1);
+    }
     return(i);
 }
 
@@ -27,6 +32,8 @@ int ft_strlen_sin_WS(char *str)
     int i;
 
     i = 0;
+    if(ft_strlen(str) == -1)
+        return(-1);
     for(int j = 0; j < ft_strlen(str); j++)
     {
         if(!(str[j] == ' ' || str[j] == '\r' || str[j] == '\n'
@@ -36,7 +43,7 @@ int ft_strlen_sin_WS(char *str)
     return(i);   
 }
 
-char check_equal_zero(char *st)
+unsigned int check_equal_zero(char *st)
 {
     if(st == NULL)
         return(0);
@@ -61,7 +68,7 @@ int count_signs(char *st)
     return(count);
 }
 
-char not_accepted_character(char *st)
+unsigned int not_accepted_character(char *st)
 {
     char c;
     int i;
@@ -86,7 +93,7 @@ char not_accepted_character(char *st)
     return(0);
 }
 
-char not_accepted_format(char *st)
+unsigned int not_accepted_format(char *st)
 {
     char stage = 1;
     char found = 0;
@@ -133,7 +140,7 @@ char not_accepted_format(char *st)
     else
         return(32);
 }
-char    many_characters(char *st)
+unsigned int many_characters(char *st)
 {
     char c;
     int i;

@@ -6,7 +6,7 @@ int main(int ac, char **av)
     t_equation equation1 = {0};
     t_parameter *parameter1;
     double sigma;
-    char errorflg = 0;
+    unsigned int errorflg = 0;
 
     if(ac != 2)
     {
@@ -15,8 +15,13 @@ int main(int ac, char **av)
     }
     if(!av[1])
         errorflg = 8;
-    else if(ft_strlen_sin_WS(av[1])==0)
+    else if(ft_strlen_sin_WS(av[1]) == 0)
         errorflg = 8;
+    else if(ft_strlen_sin_WS(av[1]) == -1)
+    {
+        errorflg = 0x100;
+    }
+    
     else
     {
         printf("your entery: %s\n", av[1]);
@@ -37,24 +42,7 @@ int main(int ac, char **av)
 
     if(errorflg)
     {
-        printf("you got these errors: -\n");
-        if(errorflg & 1)
-            printf(" -using many consucatives (+,-) signs\n");
-        if(errorflg & 2)
-            printf(" -using many consucatives power signs\n");
-        if(errorflg & 4)
-            printf(" -not using only one equal sign\n");
-        if(errorflg & 8)  
-            printf(" -using invalid equation format\n");
-        if(errorflg & 16)
-            printf(" -using an inacceptable character\n");
-        if(errorflg & 32)
-            printf(" -using an inacceptable format\n");
-        if(errorflg & 64)
-            printf(" -using multiple variables format\n");
-        if(errorflg & 128)
-            printf(" -using invalid equation format\n");
-        
+        print_errors(errorflg);
         if(errorflg & 228)
         {
             if(str)

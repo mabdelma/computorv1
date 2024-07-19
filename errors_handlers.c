@@ -1,8 +1,8 @@
 #include "computorv.h"
 
-char errors(char *eq)
+unsigned int errors(char *eq)
 {
-    char error;
+    unsigned int error;
     char found;
     char c;
     int i;
@@ -12,7 +12,7 @@ char errors(char *eq)
     c = 0;
     i = 0;
     if(!eq)
-        return(128);
+        return(0x80);
     while(eq[i])
     {
         if(eq[i + 1] && (eq[i + 1] == '-' || eq[i + 1] == '+'))
@@ -45,9 +45,9 @@ char errors(char *eq)
     return (error);
 }
 
-char    error_level3(char *st)
+unsigned int error_level3(char *st)
 {
-    char errorflg = 0;
+    unsigned int errorflg = 0;
 
     if(not_accepted_character(st))
         errorflg |= 16;
@@ -57,11 +57,11 @@ char    error_level3(char *st)
     return(errorflg);    
 }
 
-char    error_level2(char *st)
+unsigned int error_level2(char *st)
 {
     char *str;
     int current;
-    char errorflg = 0;
+    unsigned int errorflg = 0;
 
 
     current = 0;
