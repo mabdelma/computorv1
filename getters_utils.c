@@ -17,13 +17,13 @@ double get_highest_coef(t_parameter *t)
     else
         return(0);
     par = t->prev;
-    if(par && !par->prev)
+    if(par)
     {
         while(par)
         {
             if(par->coef > coef)
                 coef = par->coef;
-            par = par->next;
+            par = par->prev;
         }
     }
     return(coef);
@@ -39,13 +39,13 @@ double get_lowest_coef(t_parameter *t)
     else
         return(0);
     par = t->prev;
-    if(par && !par->prev)
+    if(par)
     {
         while(par)
         {
             if(par->coef < coef)
                 coef = par->coef;
-            par = par->next;
+            par = par->prev;
         }
     }
     return(coef);
