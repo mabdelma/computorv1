@@ -33,7 +33,7 @@ int main(int ac, char **av)
     if(errorflg)
     {
         print_errors(errorflg);
-        if(errorflg & 228)
+        if(errorflg & 231)
         {
             if(str)
                 free(str);
